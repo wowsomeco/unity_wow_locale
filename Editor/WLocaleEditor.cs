@@ -1,13 +1,13 @@
-﻿using UnityEditor;
+﻿using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 namespace Wowsome {
-  using EU = EditorUtils;
-  using LangModel = WowLocale.LangModel;
-  using LocaleModel = WowLocale.LocaleModel;
+  using LangModel = WLocale.LangModel;
+  using LocaleModel = WLocale.LocaleModel;
 
-  [CustomEditor(typeof(WowLocale))]
-  public class WowLocaleEditor : Editor {
+  [CustomEditor(typeof(WLocale))]
+  public class WLocaleEditor : Editor {
     Menu<LangModel> _languages = new Menu<LangModel>();
     LangModel _selectedLanguage = null;
     LocaleModel _selectedLocale = null;
@@ -15,15 +15,15 @@ namespace Wowsome {
     public override void OnInspectorGUI() {
 
       DrawDefaultInspector();
-      WowLocale tgt = (WowLocale)target;
+      WLocale tgt = (WLocale)target;
 
       _languages.Build(new Menu<LangModel>.BuildCallback(
           "Languages",
-          tgt.Languages,
+          tgt.languages,
           l => l.title,
           s => {
             _selectedLanguage = s.Model;
-            TextAsset t = Resources.Load<TextAsset>($"{tgt.Path}/locale_{_selectedLanguage.id}");
+            TextAsset t = Resources.Load<TextAsset>(Path.Combine(tgt.path, $"locale_{_selectedLanguage.id}"));
             if (null == t) {
               _selectedLocale = new LocaleModel(_selectedLanguage.id);
             } else {
@@ -38,4 +38,3 @@ namespace Wowsome {
     }
   }
 }
-

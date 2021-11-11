@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Wowsome {
-  public class WowLocale : MonoBehaviour {
+  public class WLocale : MonoBehaviour {
     [Serializable]
     public class LangModel {
       public string id;
@@ -26,34 +26,31 @@ namespace Wowsome {
       public string value;
     }
 
-    public string Path;
-    public List<LangModel> Languages = new List<LangModel>();
-    public Dictionary<string, LocaleModel> Data = new Dictionary<string, LocaleModel>();
-
     public string SelectedLang { get; set; }
 
-    public string DefaultLang {
-      get { return Languages[0].id; }
-    }
+    public string DefaultLang => languages[0].id;
+
+    public string path;
+    public List<LangModel> languages = new List<LangModel>();
+    public Dictionary<string, LocaleModel> data = new Dictionary<string, LocaleModel>();
 
     public void InitLocaleManager() {
-      TextAsset[] tas = Resources.LoadAll<TextAsset>(Path);
+      TextAsset[] tas = Resources.LoadAll<TextAsset>(path);
       foreach (TextAsset t in tas) {
         LocaleModel locale = JsonUtility.FromJson<LocaleModel>(t.text);
-        Data[locale.lang] = locale;
+        data[locale.lang] = locale;
       }
     }
 
     public string GetText(string key) {
-      if (SelectedLang.IsEmpty()) SelectedLang = Languages[0].id;
+      if (SelectedLang.IsEmpty()) SelectedLang = DefaultLang;
 
-      LocaleModel locale = Data[SelectedLang];
+      LocaleModel locale = data[SelectedLang];
       LocaleTextModel textModel = locale.texts.Find(x => x.key == key);
       if (null != textModel) return textModel.value;
 
-      LocaleTextModel defaultTextModel = Data[DefaultLang].texts.Find(x => x.key == key);
+      LocaleTextModel defaultTextModel = data[DefaultLang].texts.Find(x => x.key == key);
       return null != defaultTextModel ? defaultTextModel.value : null;
     }
   }
 }
-
