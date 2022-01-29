@@ -8,7 +8,7 @@ namespace Wowsome {
       InitLocaleManager();
     }
 
-    public void StartSystem(CavEngine gameEngine) {
+    public void StartSystem(WEngine gameEngine) {
 
     }
 
