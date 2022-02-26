@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using Wowsome.Core;
+﻿using Wowsome.Core;
 
 namespace Wowsome {
   public class WLocaleSystem : WLocale, ISystem {
