@@ -2,8 +2,10 @@
 
 namespace Wowsome {
   public class WLocaleSystem : WLocale, ISystem {
+    public string defaultLang = "en";
+
     public void InitSystem() {
-      InitLocaleManager();
+      InitLocaleManager(defaultLang);
     }
 
     public void StartSystem(WEngine gameEngine) {
