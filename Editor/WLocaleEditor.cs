@@ -8,7 +8,7 @@ namespace Wowsome {
 
   [CustomEditor(typeof(WLocale))]
   public class WLocaleEditor : Editor {
-    Menu<LangModel> _languages = new Menu<LangModel>();
+    EditorMenu<LangModel> _languages = new EditorMenu<LangModel>();
     LangModel _selectedLanguage = null;
     LocaleModel _selectedLocale = null;
 
@@ -17,7 +17,7 @@ namespace Wowsome {
       DrawDefaultInspector();
       WLocale tgt = (WLocale)target;
 
-      _languages.Build(new Menu<LangModel>.BuildCallback(
+      _languages.Build(new EditorMenu<LangModel>.BuildCallback(
           "Languages",
           tgt.languages,
           l => l.title,
